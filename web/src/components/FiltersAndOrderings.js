@@ -1,39 +1,56 @@
-import React from 'react';
+import React from "react";
 
-import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton } from '../styles/ComponentStyles';
+import {
+  FiltersWrapper,
+  Orderings,
+  CurrencyFilters,
+  CurrencyButton,
+} from "../styles/ComponentStyles";
 
-export default function CurrencyFilter({
-}) {
+export default function CurrencyFilter({ filter, setOrdering, setFilter }) {
+  function handleOrderingChange(e) {
+    setOrdering(e.target.value);
+  }
+
+  function handleFilterChange(e) {
+    setFilter(e.target.name);
+  }
 
   return (
     <>
       <FiltersWrapper>
         <Orderings>
-          <select>
-            <option value='-date'>Sort by Date descending (default)</option>
-            <option value='date'>Sort by Date ascending</option>
-            <option value='-amount_in_huf'>Sort by Amount descending</option>
-            <option value='amount_in_huf'>Sort by Amount ascending</option>
+          <select onChange={handleOrderingChange}>
+            <option value="-date">Sort by Date descending (default)</option>
+            <option value="date">Sort by Date ascending</option>
+            <option value="-amount_in_huf">Sort by Amount descending</option>
+            <option value="amount_in_huf">Sort by Amount ascending</option>
           </select>
         </Orderings>
         <CurrencyFilters>
           <li>
             <CurrencyButton
-              name=''
+              className={filter === "" && "active"}
+              name=""
+              onClick={handleFilterChange}
             >
               ALL
             </CurrencyButton>
           </li>
           <li>
             <CurrencyButton
-              name='HUF'
+              className={filter === "HUF" && "active"}
+              name="HUF"
+              onClick={handleFilterChange}
             >
               HUF
             </CurrencyButton>
           </li>
           <li>
             <CurrencyButton
-              name='USD'
+              className={filter === "USD" && "active"}
+              name="USD"
+              onClick={handleFilterChange}
             >
               USD
             </CurrencyButton>

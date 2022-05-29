@@ -35,6 +35,11 @@ export const CurrencyButton = styled.button`
   padding: 6px 12px;
   /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
+
+  &.active {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+  }
 `;
 
 export const Orderings = styled.div`
