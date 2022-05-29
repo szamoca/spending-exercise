@@ -1,12 +1,8 @@
+const { getAllSpendings } = require("../repositories/spendingRepository");
+
 const getSpendings = (req, res) => {
-  res.send([
-    {
-      description: "Mango",
-      amount: 1200,
-      spent_at: new Date().toISOString(),
-      currency: "USD",
-    },
-  ]);
+  const spendings = getAllSpendings();
+  res.send(spendings);
 };
 
 module.exports = {
