@@ -76,7 +76,8 @@ export default function SpendingList({ spendings, setSpendings }) {
             </TextWrapper>
             <AmountWrapper>
               <Amount currency={spending.currency}>
-                {(spending.amount / 100).toFixed(2)}
+                {/* I'm sorry but as of right now I don't understand why we needed that /100 division of the amount */}
+                {Number(spending.amount).toFixed(2)}
               </Amount>
             </AmountWrapper>
           </Spending>
