@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node -e \"require('./app').listen(5000);\"",
+    "dev": "nodemon --exec npm start",
     "test": "jest"
   },
   "author": "Polygence",
@@ -15,5 +16,8 @@
     "express": "^4.17.3",
     "jest": "^27.5.1",
     "supertest": "^6.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.16"
   }
 }
