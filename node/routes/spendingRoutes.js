@@ -1,15 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const { getSpendings } = require("../controllers/spendingController");
 
-router.get("/", (req, res) => {
-  res.send([
-    {
-      description: "Mango",
-      amount: 1200,
-      spent_at: new Date().toISOString(),
-      currency: "USD",
-    },
-  ]);
-});
+router.get("/", getSpendings);
 
 module.exports = router;
