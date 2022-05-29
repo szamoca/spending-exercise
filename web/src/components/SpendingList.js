@@ -10,6 +10,7 @@ import {
   Amount,
   AmountWrapper,
 } from "../styles/ComponentStyles";
+import { getSpendings } from "../api/spendings";
 
 export default function SpendingList({ spendings, setSpendings }) {
   const [loading, setLoading] = useState(true);
@@ -17,29 +18,7 @@ export default function SpendingList({ spendings, setSpendings }) {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5000/spendings`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then(async (res) => {
-        const body = await res.json();
-        return {
-          status: res.status,
-          body,
-        };
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setSpendings(response.body);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    getSpendings(setSpendings, setError, setLoading);
   }, []);
 
   if (loading) return <Loader />;

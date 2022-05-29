@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { InputStyles } from "../styles/InputStyles";
 import { SelectStyles } from "../styles/SelectStyles";
 import { FormStyles, ErrorMessage } from "../styles/ComponentStyles";
+import { addSpending } from "../api/spendings";
 
 export default function Form({ spendings, setSpendings }) {
   const [formData, setFormData] = useState({
@@ -26,34 +27,7 @@ export default function Form({ spendings, setSpendings }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch(`http://localhost:5000/spendings`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then(async (res) => {
-        const body = await res.json();
-        return {
-          status: res.status,
-          body,
-        };
-      })
-      .then((response) => {
-        const resStatus = response.status;
-        if (resStatus === 200) {
-          setSpendings([...spendings, response.body]);
-          setFormData({ ...formData, description: "", amount: 0 });
-        } else if (resStatus === 400 || resStatus === 500) {
-          setErrors(response.body.errors);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setErrors([{ message: err.message }]);
-      })
-      .finally(() => {
-        //setLoading(false);
-      });
+    addSpending(formData, spendings, setSpendings, setFormData, setErrors);
   }
 
   return (
