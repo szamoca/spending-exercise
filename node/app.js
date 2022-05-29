@@ -5,16 +5,6 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-
-app.get("/spendings", (req, res) => {
-  res.send([
-    {
-      description: "Mango",
-      amount: 1200,
-      spent_at: new Date().toISOString(),
-      currency: "USD",
-    },
-  ]);
-});
+app.use("/spendings", require("./routes/spendingRoutes"));
 
 module.exports = app;
