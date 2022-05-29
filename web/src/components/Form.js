@@ -4,7 +4,7 @@ import { SelectStyles } from "../styles/SelectStyles";
 import { FormStyles } from "../styles/ComponentStyles";
 
 export default function Form({ spendings, setSpendings }) {
-  const [spending, setSpending] = useState({
+  const [formData, setFormData] = useState({
     description: "",
     amount: 0,
     currency: "USD",
@@ -13,8 +13,8 @@ export default function Form({ spendings, setSpendings }) {
   function handleChange(e) {
     const { name, value } = e.target;
 
-    setSpending({
-      ...spending,
+    setFormData({
+      ...formData,
       [name]: value,
     });
   }
@@ -24,7 +24,7 @@ export default function Form({ spendings, setSpendings }) {
     fetch(`http://localhost:5000/spendings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(spending),
+      body: JSON.stringify(formData),
     })
       .then(async (res) => {
         const body = await res.json();
@@ -36,6 +36,7 @@ export default function Form({ spendings, setSpendings }) {
       .then((response) => {
         if (response.status === 200) {
           setSpendings([...spendings, response.body]);
+          setFormData({ ...formData, description: "", amount: 0 });
         }
       })
       .catch((err) => {
@@ -54,19 +55,19 @@ export default function Form({ spendings, setSpendings }) {
           type="text"
           placeholder="description"
           name="description"
-          value={spending.description}
+          value={formData.description}
           onChange={handleChange}
         />
         <InputStyles
           type="number"
           placeholder="amount"
           name="amount"
-          value={spending.amount}
+          value={formData.amount}
           onChange={handleChange}
         />
         <SelectStyles
           name="currency"
-          value={spending.currency}
+          value={formData.currency}
           onChange={handleChange}
         >
           <option value="HUF">HUF</option>
