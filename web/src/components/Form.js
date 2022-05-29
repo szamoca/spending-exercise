@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { InputStyles } from "../styles/InputStyles";
 import { SelectStyles } from "../styles/SelectStyles";
-import { FormStyles } from "../styles/ComponentStyles";
+import { FormStyles, ErrorMessage } from "../styles/ComponentStyles";
 
 export default function Form({ spendings, setSpendings }) {
   const [formData, setFormData] = useState({
@@ -9,9 +9,14 @@ export default function Form({ spendings, setSpendings }) {
     amount: 0,
     currency: "USD",
   });
+  const [errors, setErrors] = useState([]);
 
   function handleChange(e) {
     const { name, value } = e.target;
+
+    if (errors.length) {
+      setErrors([]);
+    }
 
     setFormData({
       ...formData,
@@ -34,14 +39,17 @@ export default function Form({ spendings, setSpendings }) {
         };
       })
       .then((response) => {
-        if (response.status === 200) {
+        const resStatus = response.status;
+        if (resStatus === 200) {
           setSpendings([...spendings, response.body]);
           setFormData({ ...formData, description: "", amount: 0 });
+        } else if (resStatus === 400 || resStatus === 500) {
+          setErrors(response.body.errors);
         }
       })
       .catch((err) => {
         console.error(err);
-        //setError(true);
+        setErrors([{ message: err.message }]);
       })
       .finally(() => {
         //setLoading(false);
@@ -57,6 +65,11 @@ export default function Form({ spendings, setSpendings }) {
           name="description"
           value={formData.description}
           onChange={handleChange}
+          className={
+            errors.some((error) => error?.missing === "description")
+              ? "invalid"
+              : ""
+          }
         />
         <InputStyles
           type="number"
@@ -64,6 +77,9 @@ export default function Form({ spendings, setSpendings }) {
           name="amount"
           value={formData.amount}
           onChange={handleChange}
+          className={
+            errors.some((error) => error?.missing === "amount") ? "invalid" : ""
+          }
         />
         <SelectStyles
           name="currency"
@@ -75,6 +91,9 @@ export default function Form({ spendings, setSpendings }) {
         </SelectStyles>
         <InputStyles type="submit" value="Save" onClick={handleSubmit} />
       </FormStyles>
+      {errors.map((error) => (
+        <ErrorMessage>{error.message}</ErrorMessage>
+      ))}
     </>
   );
 }
