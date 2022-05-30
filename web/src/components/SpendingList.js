@@ -12,7 +12,11 @@ import {
 } from "../styles/ComponentStyles";
 import { getSpendings } from "../api/spendings";
 
-export default function SpendingList({ spendings, setSpendings }) {
+export default function SpendingList({
+  spendings,
+  fetchOptions,
+  setSpendings,
+}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -20,6 +24,11 @@ export default function SpendingList({ spendings, setSpendings }) {
     setLoading(true);
     getSpendings(setSpendings, setError, setLoading);
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    getSpendings(setSpendings, setError, setLoading, fetchOptions);
+  }, [spendings.length, fetchOptions]);
 
   if (loading) return <Loader />;
 

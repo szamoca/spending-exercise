@@ -1,8 +1,18 @@
-export function getSpendings(successCallback, errorCallback, loadingCallback) {
-  return fetch(`http://localhost:5000/spendings`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  })
+export function getSpendings(
+  successCallback,
+  errorCallback,
+  loadingCallback,
+  options
+) {
+  return fetch(
+    `http://localhost:5000/spendings?ordering=${
+      options?.ordering || "-date"
+    }&filter=${options?.filter || ""}`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }
+  )
     .then(async (res) => {
       const body = await res.json();
       return {

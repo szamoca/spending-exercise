@@ -27,7 +27,13 @@ export default function Form({ spendings, setSpendings }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    addSpending(formData, spendings, setSpendings, setFormData, setErrors);
+    addSpending(
+      formData,
+      spendings,
+      setSpendings,
+      setFormData,
+      setErrors
+    );
   }
 
   return (

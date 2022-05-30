@@ -7,13 +7,13 @@ import {
   CurrencyButton,
 } from "../styles/ComponentStyles";
 
-export default function CurrencyFilter({ filter, setOrdering, setFilter }) {
+export default function CurrencyFilter({ fetchOptions, setFetchOptions }) {
   function handleOrderingChange(e) {
-    setOrdering(e.target.value);
+    setFetchOptions({ ...fetchOptions, ordering: e.target.value });
   }
 
   function handleFilterChange(e) {
-    setFilter(e.target.name);
+    setFetchOptions({ ...fetchOptions, filter: e.target.name });
   }
 
   return (
@@ -30,7 +30,7 @@ export default function CurrencyFilter({ filter, setOrdering, setFilter }) {
         <CurrencyFilters>
           <li>
             <CurrencyButton
-              className={filter === "" && "active"}
+              className={fetchOptions.filter === "" && "active"}
               name=""
               onClick={handleFilterChange}
             >
@@ -39,7 +39,7 @@ export default function CurrencyFilter({ filter, setOrdering, setFilter }) {
           </li>
           <li>
             <CurrencyButton
-              className={filter === "HUF" && "active"}
+              className={fetchOptions.filter === "HUF" && "active"}
               name="HUF"
               onClick={handleFilterChange}
             >
@@ -48,7 +48,7 @@ export default function CurrencyFilter({ filter, setOrdering, setFilter }) {
           </li>
           <li>
             <CurrencyButton
-              className={filter === "USD" && "active"}
+              className={fetchOptions.filter === "USD" && "active"}
               name="USD"
               onClick={handleFilterChange}
             >

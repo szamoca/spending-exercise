@@ -6,19 +6,24 @@ import Layout from "./components/Layout";
 
 export default function App() {
   const [spendings, setSpendings] = useState([]);
-  const [ordering, setOrdering] = useState("-date");
-  const [filter, setFilter] = useState("");
+  const [fetchOptions, setFetchOptions] = useState({
+    ordering: "-date",
+    filter: "",
+  });
 
   return (
     <>
       <Layout>
         <Form spendings={spendings} setSpendings={setSpendings} />
         <FiltersAndOrderings
-          filter={filter}
-          setOrdering={setOrdering}
-          setFilter={setFilter}
+          fetchOptions={fetchOptions}
+          setFetchOptions={setFetchOptions}
         />
-        <SpendingList spendings={spendings} setSpendings={setSpendings} />
+        <SpendingList
+          spendings={spendings}
+          fetchOptions={fetchOptions}
+          setSpendings={setSpendings}
+        />
       </Layout>
     </>
   );

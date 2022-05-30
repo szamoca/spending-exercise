@@ -4,7 +4,10 @@ const {
 } = require("../repositories/spendingRepository");
 
 const getSpendings = (req, res) => {
-  const spendings = getAllSpendings();
+  const spendings = getAllSpendings(
+    req.query?.filter || "",
+    req.query?.ordering || "-date"
+  );
   res.status(200).json(spendings);
 };
 
