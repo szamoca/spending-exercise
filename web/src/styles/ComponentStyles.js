@@ -37,8 +37,9 @@ export const CurrencyButton = styled.button`
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
 
   &.active {
-    background-color: var(--color-blue);
-    color: var(--color-white);
+    background-color: var(--color-lightblue);
+    color: var(--color-blue);
+    font-weight: bold;
   }
 `;
 
@@ -186,7 +187,7 @@ export const Spending = styled.article`
 export const IconWrapper = styled.div`
   padding: 8px;
   line-height: 0;
-  background-color: #d1e7fb;
+  background-color: var(--color-lightblue);
   border-radius: 12px;
   margin-right: 1.5rem;
 
